@@ -35,9 +35,9 @@ Sistem ini menggabungkan Diffie-Hellman (DH) untuk mengamankan *jalur komunikasi
 
 Untuk memastikan beban kerja seimbang, pengembangan proyek dibagi menjadi 3 modul fungsional:
 
-| Nama Anggota | Modul Fokus | Tanggung Jawab Utama |
+| Nama Anggota |  NRP | Modul Fokus | Tanggung Jawab Utama |
 |---|---|---|
-| **?** | **System Integration & CLI** | Menyatukan kode ke dalam `main.py`. Membangun Command Line Interface (CLI) interaktif, menangani logika Diffie-Hellman *handshake*, *error handling*, dan memastikan alur demo dari Klinik ke RS berjalan mulus. |
+| **Oryza Qiara Ramadhani** | 5027241084 | **System Integration & CLI** | Menyatukan kode ke dalam `main.py`. Membangun Command Line Interface (CLI) interaktif, menangani logika Diffie-Hellman *handshake*, *error handling*, dan memastikan alur demo dari Klinik ke RS berjalan mulus. |
 | **?** | **Core Cryptography Math** | Membangun fondasi matematika murni di `math_utils.py`. Membuat fungsi `mod_exp` untuk eksponensial modular, algoritma *Extended Euclidean* untuk `mod_inverse`, serta pencarian bilangan prima yang aman. |
 | **?** | **ElGamal Data Processor** | Mengelola terjemahan data di `elgamal.py`. Membuat fungsi konversi Teks-ke-ASCII, serta menulis logika enkripsi (pemecahan pesan ke blok) dan dekripsi ElGamal. |
 
