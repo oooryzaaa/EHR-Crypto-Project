@@ -1,28 +1,55 @@
-# EHR-Crypto-Project
+# Erdoza-EHR-Project 
 
-Proyek ini adalah simulasi sistem transfer data Rekam Medis Elektronik (EHR) antar institusi kesehatan (misal: Klinik ke Rumah Sakit Rujukan) menggunakan pengamanan kriptografi hibrida dari awal (from scratch) **tanpa library kriptografi eksternal**.
+Proyek ini adalah simulasi sistem transfer data Rekam Medis Elektronik (EHR) antar institusi kesehatan (misal: Klinik ke Rumah Sakit Rujukan) menggunakan pengamanan kriptografi hibrida dari nol (*from scratch*) **tanpa menggunakan library kriptografi eksternal**.
 
-Sistem ini diimplementasikan menggunakan bahasa pemrograman Python murni untuk mendemonstrasikan algoritma **Diffie-Hellman** dan **ElGamal**.
+Proyek ini dibangun menggunakan Python murni untuk mendemonstrasikan implementasi algoritma **Diffie-Hellman** dan **ElGamal** secara matematis dan fungsional.
 
-## Arsitektur Keamanan
-1. **Diffie-Hellman Key Exchange:** Digunakan untuk memvalidasi dan mengamankan jalur komunikasi (Handshake & Session Validation) antara server Klinik dan Rumah Sakit.
-2. **ElGamal Asymmetric Encryption:** Digunakan untuk mengenkripsi data teks Rekam Medis Elektronik agar tetap rahasia dari pihak ketiga (Man-in-the-Middle) maupun jika terjadi kebocoran basis data.
+---
 
-## Fitur Utama
-* **Pure Cryptographic Math:** Implementasi algoritma eksponensiasi modular dan *Extended Euclidean* secara manual.
-* **Text-to-Ciphertext:** Konversi data medis (String) menjadi blok angka, dienkripsi menjadi pasangan ciphertext $(c_1, c_2)$.
-* **Interactive CLI:** Antarmuka *Command Line* untuk menyimulasikan peran sebagai Dokter Pengirim dan Server Penerima.
+## Alur Kerja Sistem (Cara Kerja)
 
-##  Tim Pengembang (Kelompok X)
-| Nama | NIM | Jobdesk |
+Sistem ini menggabungkan Diffie-Hellman (DH) untuk mengamankan *jalur komunikasi* dan ElGamal untuk mengamankan *data rekam medis*.
+
+1. **Fase 1: Inisiasi Jalur Aman (Diffie-Hellman Handshake)**
+   * Komputer Klinik (Pengirim) dan Server Rumah Sakit (Penerima) menyepakati parameter publik (bilangan prima $p$ dan generator $g$).
+   * Keduanya menghasilkan kunci privat masing-masing dan bertukar kunci publik di jaringan.
+   * Keduanya menghitung *Shared Secret* (Kunci Sesi) untuk memastikan jalur komunikasi aman dari serangan *Man-in-the-Middle* (MitM).
+
+2. **Fase 2: Persiapan Kunci Enkripsi (ElGamal Key Generation)**
+   * Server Rumah Sakit membuat pasangan kunci asimetris (*Public Key* & *Private Key*) menggunakan algoritma ElGamal.
+   * Rumah Sakit mengirimkan Kunci Publik ElGamal-nya ke Klinik, sementara Kunci Privat disimpan di basis data Rumah Sakit.
+
+3. **Fase 3: Pemrosesan & Enkripsi Data EHR (Di sisi Klinik)**
+   * Dokter di Klinik memasukkan data EHR pasien berupa teks (Misal: `ID: 001 | Pasien: Budi | Diagnosa: Kanker Paru`).
+   * Sistem mengubah teks menjadi deretan blok angka menggunakan konversi nilai ASCII.
+   * Sistem mengenkripsi angka tersebut menggunakan Kunci Publik ElGamal milik Rumah Sakit, menghasilkan ciphertext (pasangan $c_1, c_2$) yang bentuknya acak, lalu mengirimkannya melalui jaringan.
+
+4. **Fase 4: Dekripsi & Pemulihan Data (Di sisi Rumah Sakit)**
+   * Server Rumah Sakit menerima ciphertext.
+   * Sistem mendekripsi angka-angka acak tersebut menggunakan Kunci Privat ElGamal milik Rumah Sakit.
+   * Hasil dekripsi dikonversi kembali menjadi teks ASCII sehingga rekam medis pasien dapat dibaca dengan utuh.
+
+---
+
+## Pembagian Jobdesk Tim Erdoza
+
+Untuk memastikan beban kerja seimbang, pengembangan proyek dibagi menjadi 3 modul fungsional:
+
+| Nama Anggota | Modul Fokus | Tanggung Jawab Utama |
 |---|---|---|
-| [Nama Anggota 1] | [NIM 1] | Core Cryptography & Math Engine |
-| [Nama Anggota 2] | [NIM 2] | ElGamal Data Processor (Enkripsi/Dekripsi) |
-| [Nama Anggota 3] | [NIM 3] | System Integration, DH Handshake, & CLI |
+| **?** | **System Integration & CLI** | Menyatukan kode ke dalam `main.py`. Membangun Command Line Interface (CLI) interaktif, menangani logika Diffie-Hellman *handshake*, *error handling*, dan memastikan alur demo dari Klinik ke RS berjalan mulus. |
+| **?** | **Core Cryptography Math** | Membangun fondasi matematika murni di `math_utils.py`. Membuat fungsi `mod_exp` untuk eksponensial modular, algoritma *Extended Euclidean* untuk `mod_inverse`, serta pencarian bilangan prima yang aman. |
+| **?** | **ElGamal Data Processor** | Mengelola terjemahan data di `elgamal.py`. Membuat fungsi konversi Teks-ke-ASCII, serta menulis logika enkripsi (pemecahan pesan ke blok) dan dekripsi ElGamal. |
 
-## Cara Menjalankan Program
-Pastikan Anda memiliki Python 3.x terinstal di sistem Anda.
-1. Clone repositori ini:
-   ```bash
-   git clone [https://github.com/oooryzaaa/EHR-Crypto-System.git]
-   cd EHR-Crypto-System
+*(Catatan: Silakan sesuaikan kembali posisi jobdesk di atas sesuai kesepakatan tim).*
+
+---
+
+## Struktur Repositori
+
+```text
+Erdoza-EHR-Project/
+├── math_utils.py         # Fungsi matematika dasar (Eksponensial, Invers Modular)
+├── elgamal.py            # Logika enkripsi, dekripsi, & konversi teks ASCII
+├── main.py               # Program utama (CLI Menu & DH Handshake)
+└── README.md             # Dokumentasi proyek
