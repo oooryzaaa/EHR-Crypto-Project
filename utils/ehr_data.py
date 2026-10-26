@@ -9,17 +9,18 @@ Uses fictional patient data for demonstrations.
 
 def validate_ehr(text: str) -> bool:
     """Check that EHR text is non-empty."""
-    # TODO (Erlinda): Validate input.
-    raise NotImplementedError("Implement validate_ehr")
+    return isinstance(text, str) and bool(text.strip())
 
 
 def text_to_bytes(text: str) -> bytes:
     """Convert EHR text to UTF-8 bytes."""
-    # TODO (Erlinda): Encode text.
-    raise NotImplementedError("Implement text_to_bytes")
+    if not isinstance(text, str):
+        raise TypeError("EHR text must be a string.")
+    return text.encode("utf-8")
 
 
 def bytes_to_text(data: bytes) -> str:
     """Convert UTF-8 bytes back to text."""
-    # TODO (Erlinda): Decode bytes.
-    raise NotImplementedError("Implement bytes_to_text")
+    if not isinstance(data, bytes):
+        raise TypeError("EHR data must be bytes.")
+    return data.decode("utf-8")

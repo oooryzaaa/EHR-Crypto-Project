@@ -131,11 +131,12 @@ Keterangan:
 - `g`: generator
 - `x`: private key
 - `y`: komponen public key
+- Pasangan kunci direpresentasikan sebagai public key `(p, g, y)` dan private key `(p, g, x)`.
 
 ### Phase 4 — EHR Encryption
 
 1. Data EHR dikonversi menjadi representasi byte UTF-8.
-2. Byte direpresentasikan sebagai angka untuk diproses oleh ElGamal.
+2. Setiap byte dipetakan ke angka `1..256` (`byte + 1`), sehingga modulus harus memenuhi `p > 256`.
 3. Sistem menghasilkan bilangan acak `k` untuk operasi enkripsi.
 4. Setiap blok data dienkripsi menggunakan public key Rumah Sakit.
 5. Sistem menghasilkan ciphertext dalam bentuk pasangan `(c1, c2)`.
@@ -384,7 +385,8 @@ Panduan lengkap dapat dilihat pada `CONTRIBUTING.md`.
 | Hospital Portal UI | Implemented |
 | Diffie-Hellman | Implementation written, testing pending |
 | Mathematical Utilities | Pending verification/integration |
-| ElGamal Encryption & Decryption | Pending verification/integration |
+| ElGamal Encryption & Decryption | Implemented and unit tested |
+| EHR Data Processing | Implemented and unit tested |
 | End-to-End Testing | Pending |
 
 Status dapat berubah seiring kontribusi anggota dan hasil pengujian.
