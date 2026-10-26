@@ -384,12 +384,15 @@ Panduan lengkap dapat dilihat pada `CONTRIBUTING.md`.
 | Cryptography Monitor UI | Implemented |
 | Hospital Portal UI | Implemented |
 | Diffie-Hellman | Implementation written, testing pending |
-| Mathematical Utilities | Pending verification/integration |
+| Mathematical Utilities | Implemented with unit tests; used by Diffie-Hellman |
 | ElGamal Encryption & Decryption | Implemented and unit tested |
 | EHR Data Processing | Implemented and unit tested |
 | End-to-End Testing | Pending |
 
 Status dapat berubah seiring kontribusi anggota dan hasil pengujian.
+
+Dokumentasi modul matematika Christiano Ronaldo, hasil review integrasi, dan
+kontrak validasi tersedia di [Math Engine](docs/math-engine.md).
 
 ## 11. Security Limitations
 
