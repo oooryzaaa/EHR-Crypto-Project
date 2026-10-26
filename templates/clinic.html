@@ -1,0 +1,149 @@
+
+{% extends "base.html" %}
+
+{% block title %}Clinic Portal | Erdoza{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+    <div>
+        <span class="eyebrow">SENDER WORKSPACE</span>
+        <h1>Clinic Portal</h1>
+        <p>
+            Prepare a fictional electronic health record
+            before encryption and transmission.
+        </p>
+    </div>
+    <span class="page-chip">● Clinic / Sender</span>
+</div>
+
+<div class="two-column-layout">
+
+    <section class="panel">
+        <div class="panel-header">
+            <div>
+                <span class="panel-eyebrow">MEDICAL RECORD</span>
+                <h3>Patient Information</h3>
+                <p>Complete all fields to prepare the EHR.</p>
+            </div>
+
+            <div class="panel-header-icon">✚</div>
+        </div>
+
+        <div class="form-notice">
+            Only use fictional patient information.
+            This simulator is not a medical application.
+        </div>
+
+        <form id="ehrForm">
+            <div class="form-grid">
+                <div class="field">
+                    <label for="patient_id">Patient ID</label>
+                    <input id="patient_id"
+                           name="patient_id"
+                           type="text"
+                           maxlength="200"
+                           placeholder="e.g. EHR-2026-001"
+                           required>
+                </div>
+
+                <div class="field">
+                    <label for="age">Patient Age</label>
+                    <input id="age"
+                           name="age"
+                           type="number"
+                           min="0"
+                           max="130"
+                           placeholder="e.g. 45"
+                           required>
+                </div>
+
+                <div class="field field-full">
+                    <label for="patient_name">Patient Name</label>
+                    <input id="patient_name"
+                           name="patient_name"
+                           maxlength="200"
+                           type="text"
+                           placeholder="Fictional patient name"
+                           required>
+                </div>
+
+                <div class="field field-full">
+                    <label for="diagnosis">Diagnosis</label>
+                    <textarea id="diagnosis"
+                              name="diagnosis"
+                              maxlength="200"
+                              rows="3"
+                              placeholder="Fictional diagnosis"
+                              required></textarea>
+                </div>
+
+                <div class="field field-full">
+                    <label for="treatment">Treatment / Medication</label>
+                    <textarea id="treatment"
+                              name="treatment"
+                              maxlength="200"
+                              rows="3"
+                              placeholder="Fictional treatment"
+                              required></textarea>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button"
+                        class="secondary-button"
+                        id="fillDemoData">
+                    Use Sample Data
+                </button>
+
+                <button type="submit"
+                        class="primary-button"
+                        id="prepareButton">
+                    Prepare EHR →
+                </button>
+            </div>
+        </form>
+    </section>
+
+    <aside class="side-panel-stack">
+        <section class="panel">
+            <div class="panel-header">
+                <div>
+                    <span class="panel-eyebrow">DOCUMENT PREVIEW</span>
+                    <h3>EHR Preview</h3>
+                </div>
+            </div>
+
+            <div class="document-preview" id="ehrPreview">
+                <div class="empty-illustration">▤</div>
+                <h4>No record prepared</h4>
+                <p>
+                    Fill in the patient form to create
+                    the fictional EHR document.
+                </p>
+            </div>
+
+            <div class="preview-footer">
+                <span>Encoding</span>
+                <strong>UTF-8</strong>
+            </div>
+        </section>
+
+        <section class="panel">
+            <span class="panel-eyebrow">NEXT STEP</span>
+            <h3>Cryptographic Processing</h3>
+            <p class="supporting-text">
+                After preparing the EHR, continue to
+                the Cryptography Monitor to execute
+                the handshake and encryption.
+            </p>
+
+            <a class="outline-button"
+               href="{{ url_for('cryptography') }}">
+                Go to Cryptography →
+            </a>
+        </section>
+    </aside>
+</div>
+
+{% endblock %}

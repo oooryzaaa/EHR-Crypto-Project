@@ -1,0 +1,195 @@
+
+{% extends "base.html" %}
+
+{% block title %}Cryptography Monitor | Erdoza{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+    <div>
+        <span class="eyebrow">CRYPTOGRAPHIC WORKSPACE</span>
+        <h1>Cryptography Monitor</h1>
+        <p>
+            Observe the mathematical workflow behind
+            Diffie-Hellman and ElGamal.
+        </p>
+    </div>
+    <span class="page-chip">◇ Cryptography Engine</span>
+</div>
+
+<div class="crypto-overview">
+    <div class="crypto-party">
+        <div class="party-avatar clinic-avatar">✚</div>
+        <h4>Clinic</h4>
+        <span>Sender</span>
+    </div>
+
+    <div class="crypto-channel">
+        <div class="channel-label">
+            PUBLIC NETWORK — SIMULATION
+        </div>
+        <div class="channel-line">
+            <span>●</span>
+            <span class="channel-dashes"></span>
+            <span>◇</span>
+            <span class="channel-dashes"></span>
+            <span>●</span>
+        </div>
+        <div class="channel-subtitle">
+            Public keys / encrypted data
+        </div>
+    </div>
+
+    <div class="crypto-party">
+        <div class="party-avatar hospital-avatar">▤</div>
+        <h4>Hospital</h4>
+        <span>Receiver</span>
+    </div>
+</div>
+
+<div class="crypto-grid">
+
+    <section class="panel">
+        <div class="panel-header">
+            <div>
+                <span class="panel-eyebrow">STEP 01</span>
+                <h3>Diffie-Hellman Key Exchange</h3>
+                <p>Generate and compare shared secrets.</p>
+            </div>
+            <span class="step-tag">DH</span>
+        </div>
+
+        <div class="parameters-grid">
+            <div class="parameter">
+                <span>Prime Modulus (p)</span>
+                <strong id="dhPrime">467</strong>
+            </div>
+            <div class="parameter">
+                <span>Generator (g)</span>
+                <strong id="dhGenerator">2</strong>
+            </div>
+            <div class="parameter">
+                <span>Clinic Public Key</span>
+                <strong id="clinicPublic">—</strong>
+            </div>
+            <div class="parameter">
+                <span>Hospital Public Key</span>
+                <strong id="hospitalPublic">—</strong>
+            </div>
+        </div>
+
+        <div class="formula-panel">
+            <span>KEY EXCHANGE FORMULAS</span>
+            <code>A = g^a mod p</code>
+            <code>B = g^b mod p</code>
+            <code>S = B^a mod p = A^b mod p</code>
+        </div>
+
+        <div class="result-row">
+            <span>Shared Secret Comparison</span>
+            <span id="dhResult" class="result-tag">
+                Not Started
+            </span>
+        </div>
+
+        <button id="handshakeButton"
+                class="primary-button full-width">
+            Generate DH Handshake →
+        </button>
+    </section>
+
+    <section class="panel">
+        <div class="panel-header">
+            <div>
+                <span class="panel-eyebrow">STEP 02</span>
+                <h3>ElGamal Encryption</h3>
+                <p>Encrypt EHR with the hospital public key.</p>
+            </div>
+            <span class="step-tag purple-tag">EG</span>
+        </div>
+
+        <div class="algorithm-details">
+            <div>
+                <span>Algorithm</span>
+                <strong>ElGamal</strong>
+            </div>
+            <div>
+                <span>Data Encoding</span>
+                <strong>UTF-8</strong>
+            </div>
+            <div>
+                <span>Key Type</span>
+                <strong>Asymmetric</strong>
+            </div>
+        </div>
+
+        <div class="formula-panel">
+            <span>ENCRYPTION FORMULAS</span>
+            <code>y = g^x mod p</code>
+            <code>c1 = g^k mod p</code>
+            <code>c2 = m × y^k mod p</code>
+        </div>
+
+        <div class="result-row">
+            <span>Encrypted Blocks</span>
+            <strong id="encryptedBlockCount">0</strong>
+        </div>
+
+        <button id="encryptButton"
+                class="primary-button full-width">
+            Encrypt Prepared EHR →
+        </button>
+    </section>
+</div>
+
+<section class="panel transmission-panel">
+    <div class="panel-header">
+        <div>
+            <span class="panel-eyebrow">STEP 03</span>
+            <h3>Network Transmission Observer</h3>
+            <p>
+                Inspect the ciphertext visible in the
+                simulated public network.
+            </p>
+        </div>
+        <span class="step-tag red-tag">NETWORK</span>
+    </div>
+
+    <div class="terminal-header">
+        <div class="terminal-dots">
+            <span></span><span></span><span></span>
+        </div>
+        <span>ciphertext-monitor.log</span>
+        <span>READ ONLY</span>
+    </div>
+
+    <pre id="ciphertextOutput" class="terminal-output">[ERDOZA] Waiting for encrypted data...
+[INFO] Prepare EHR and run ElGamal encryption.</pre>
+
+    <div class="transmission-footer">
+        <div>
+            <strong id="transmissionStatus">Not Transmitted</strong>
+            <p>Transmission is simulated locally, not over a network.</p>
+        </div>
+
+        <button id="transmitButton"
+                class="primary-button">
+            Simulate Transmission →
+        </button>
+    </div>
+</section>
+
+<div class="info-panel">
+    <div class="info-icon">!</div>
+    <div>
+        <strong>Cryptographic limitations</strong>
+        <p>
+            DH public-key exchange is not authenticated.
+            ElGamal provides confidentiality in this demonstration,
+            but not message authenticity or integrity.
+            The small parameters are insecure for real-world use.
+        </p>
+    </div>
+</div>
+
+{% endblock %}

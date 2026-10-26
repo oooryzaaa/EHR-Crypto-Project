@@ -1,0 +1,151 @@
+
+{% extends "base.html" %}
+
+{% block title %}Dashboard | Erdoza HealthCrypt{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+    <div>
+        <span class="eyebrow">SYSTEM OVERVIEW</span>
+        <h1>Secure EHR Dashboard</h1>
+        <p>
+            Explore secure electronic health record transfer
+            through an educational cryptography simulation.
+        </p>
+    </div>
+
+    <a href="{{ url_for('clinic') }}" class="primary-button">
+        Start Simulation <span>→</span>
+    </a>
+</div>
+
+<section class="hero-banner">
+    <div class="hero-content">
+        <div class="hero-tag">ERDOZA HEALTHCRYPT</div>
+
+        <h2>Protecting healthcare data through cryptography.</h2>
+
+        <p>
+            Follow a fictional medical record from a clinic
+            to a referral hospital using Diffie-Hellman
+            and ElGamal.
+        </p>
+
+        <div class="hero-actions">
+            <a href="{{ url_for('clinic') }}"
+               class="hero-button">
+                Open Clinic Portal →
+            </a>
+            <a href="{{ url_for('cryptography') }}"
+               class="hero-secondary">
+                Explore Cryptography
+            </a>
+        </div>
+    </div>
+
+    <div class="hero-graphic" aria-hidden="true">
+        <div class="hero-symbol">✚</div>
+        <div class="hero-orbit hero-orbit-one"></div>
+        <div class="hero-orbit hero-orbit-two"></div>
+    </div>
+</section>
+
+<div class="metrics-grid">
+    <div class="metric-card">
+        <div class="metric-icon blue">◇</div>
+        <span class="metric-label">DH Handshake</span>
+        <h3 id="metricConnection">Not Started</h3>
+        <p>Key exchange demonstration</p>
+    </div>
+
+    <div class="metric-card">
+        <div class="metric-icon purple">▣</div>
+        <span class="metric-label">Encryption</span>
+        <h3 id="metricEncryption">Pending</h3>
+        <p>ElGamal cryptographic engine</p>
+    </div>
+
+    <div class="metric-card">
+        <div class="metric-icon green">↗</div>
+        <span class="metric-label">Transmission</span>
+        <h3 id="metricTransmission">Pending</h3>
+        <p>Local ciphertext simulation</p>
+    </div>
+
+    <div class="metric-card">
+        <div class="metric-icon orange">▤</div>
+        <span class="metric-label">Ciphertext Blocks</span>
+        <h3 id="metricBlocks">0</h3>
+        <p>Encrypted message blocks</p>
+    </div>
+</div>
+
+<div class="section-heading">
+    <div>
+        <h3>Transfer Workflow</h3>
+        <p>Track the stages of your simulation.</p>
+    </div>
+    <span class="section-tag">4 STAGES</span>
+</div>
+
+<div class="workflow-grid">
+    <div class="workflow-card" id="workflowPrepared">
+        <div class="workflow-top">
+            <span>01 / CLINIC</span>
+            <span class="workflow-indicator">○</span>
+        </div>
+        <div class="workflow-icon">✚</div>
+        <h4>Prepare EHR</h4>
+        <p>Create fictional electronic health record data.</p>
+        <a href="{{ url_for('clinic') }}">Open Portal →</a>
+    </div>
+
+    <div class="workflow-card" id="workflowConnected">
+        <div class="workflow-top">
+            <span>02 / KEY EXCHANGE</span>
+            <span class="workflow-indicator">○</span>
+        </div>
+        <div class="workflow-icon">◇</div>
+        <h4>DH Handshake</h4>
+        <p>Generate shared secrets between two parties.</p>
+        <a href="{{ url_for('cryptography') }}">Open Monitor →</a>
+    </div>
+
+    <div class="workflow-card" id="workflowEncrypted">
+        <div class="workflow-top">
+            <span>03 / ENCRYPTION</span>
+            <span class="workflow-indicator">○</span>
+        </div>
+        <div class="workflow-icon">▣</div>
+        <h4>Encrypt & Transmit</h4>
+        <p>Encrypt with ElGamal and simulate transmission.</p>
+        <a href="{{ url_for('cryptography') }}">Open Monitor →</a>
+    </div>
+
+    <div class="workflow-card" id="workflowDecrypted">
+        <div class="workflow-top">
+            <span>04 / HOSPITAL</span>
+            <span class="workflow-indicator">○</span>
+        </div>
+        <div class="workflow-icon">▤</div>
+        <h4>Recover EHR</h4>
+        <p>Decrypt and verify the recovered record.</p>
+        <a href="{{ url_for('hospital') }}">Open Portal →</a>
+    </div>
+</div>
+
+<div class="info-panel">
+    <div class="info-icon">i</div>
+    <div>
+        <strong>About this simulation</strong>
+        <p>
+            This project demonstrates cryptographic concepts.
+            It does not implement an authenticated healthcare
+            communication protocol and must not process real
+            medical records.
+        </p>
+    </div>
+</div>
+
+{% endblock %}

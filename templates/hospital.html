@@ -1,0 +1,110 @@
+
+{% extends "base.html" %}
+
+{% block title %}Hospital Portal | Erdoza{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+    <div>
+        <span class="eyebrow">RECEIVER WORKSPACE</span>
+        <h1>Hospital Portal</h1>
+        <p>
+            Receive simulated encrypted health records
+            and recover the original EHR.
+        </p>
+    </div>
+    <span class="page-chip">● Hospital / Receiver</span>
+</div>
+
+<div class="metrics-grid hospital-metrics">
+    <div class="metric-card">
+        <div class="metric-icon green">↗</div>
+        <span class="metric-label">Incoming Transmission</span>
+        <h3 id="hospitalTransmission">Waiting</h3>
+        <p>Local simulation status</p>
+    </div>
+
+    <div class="metric-card">
+        <div class="metric-icon purple">▣</div>
+        <span class="metric-label">Encrypted Blocks</span>
+        <h3 id="hospitalBlockCount">0</h3>
+        <p>Received ciphertext blocks</p>
+    </div>
+
+    <div class="metric-card">
+        <div class="metric-icon blue">◇</div>
+        <span class="metric-label">Decryption</span>
+        <h3 id="hospitalDecryption">Pending</h3>
+        <p>Hospital private key required</p>
+    </div>
+</div>
+
+<div class="two-column-layout">
+    <section class="panel">
+        <div class="panel-header">
+            <div>
+                <span class="panel-eyebrow">INCOMING PAYLOAD</span>
+                <h3>Encrypted EHR</h3>
+                <p>Ciphertext received through the simulation.</p>
+            </div>
+        </div>
+
+        <div class="encrypted-preview">
+            <div class="encrypted-symbol">▣</div>
+            <strong id="incomingPayloadStatus">
+                No incoming encrypted record
+            </strong>
+            <p id="incomingPayloadDescription">
+                Complete encryption and transmission
+                before decrypting an EHR.
+            </p>
+        </div>
+
+        <button id="decryptButton"
+                class="primary-button full-width">
+            Decrypt with Hospital Private Key →
+        </button>
+    </section>
+
+    <section class="panel">
+        <div class="panel-header">
+            <div>
+                <span class="panel-eyebrow">RECOVERED DOCUMENT</span>
+                <h3>Decrypted EHR</h3>
+                <p>Recovered plaintext is shown after decryption.</p>
+            </div>
+            <span class="step-tag green-tag">RESULT</span>
+        </div>
+
+        <div id="decryptedPreview" class="document-preview">
+            <div class="empty-illustration">▤</div>
+            <h4>No decrypted record</h4>
+            <p>
+                Once decryption succeeds, the recovered
+                EHR will appear in this panel.
+            </p>
+        </div>
+
+        <div class="result-row">
+            <span>Record Verification</span>
+            <span id="verificationStatus" class="result-tag">
+                Not Verified
+            </span>
+        </div>
+    </section>
+</div>
+
+<div class="info-panel">
+    <div class="info-icon">i</div>
+    <div>
+        <strong>Educational verification</strong>
+        <p>
+            The recovered text is compared with the original
+            fictional EHR. Equality confirms this round trip
+            recovered the same data; it does not prove authenticity.
+        </p>
+    </div>
+</div>
+
+{% endblock %}
