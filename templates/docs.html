@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Documentation | Erdoza{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/docs.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+    <div>
+        <span class="eyebrow">DOCUMENTATION</span>
+        <h1>Demo Script &amp; Code Walkthrough</h1>
+        <p>Semua dokumen demo, bisa dibuka dari HP saat presentasi.</p>
+    </div>
+    <span class="page-chip">▤ Docs</span>
+</div>
+
+<nav class="docs-tabs">
+    {% for slug, label in pages %}
+    <a href="{{ url_for('docs_viewer', name=slug) }}"
+       class="docs-tab {% if active == slug %}active{% endif %}">{{ label }}</a>
+    {% endfor %}
+</nav>
+
+<article class="panel docs-panel">
+    <div class="docs-content">
+        {{ content }}
+    </div>
+</article>
+
+{% endblock %}

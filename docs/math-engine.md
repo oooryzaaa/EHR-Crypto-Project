@@ -38,9 +38,13 @@ demonstrasi kecil seperti `p = 467`.
   perubahan ini hanya menyediakan dan menguji fungsi matematika bersama.
 - DH saat ini belum memvalidasi primalitas `p`. Selain itu, generator dengan
   orde kecil dapat menghasilkan public key `1` atau `p-1` yang kemudian ditolak
-  `compute_shared_secret`. Parameter demo `p=467, g=2` tidak mengalami kasus
-  tersebut untuk rentang private key yang digunakan. Validasi parameter DH
-  merupakan tindak lanjut pada modul Oryza.
+  `compute_shared_secret`. Parameter demo `p=467, g=2` tetap dapat terkena kasus
+  ini: 467 adalah safe prime dan 2 primitive root (orde 466), tetapi private key
+  `233` menghasilkan public key `466 = p-1`, sehingga `perform_handshake` gagal
+  dengan peluang sekitar 0,43% per handshake. Kasus ini kini ditangani oleh
+  perulangan pada `generate_dh_keys`; lihat `docs/code-walkthrough.md` bagian
+  [0.5]. Validasi parameter DH (primalitas `p` dan orde `g`) masih merupakan
+  tindak lanjut pada modul Oryza.
 
 ## Pengujian
 

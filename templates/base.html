@@ -15,6 +15,8 @@
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/style.css') }}">
+
+    {% block extra_head %}{% endblock %}
 </head>
 
 <body data-page="{{ request.endpoint }}">
@@ -55,6 +57,12 @@
                class="nav-link-custom {% if request.endpoint == 'hospital' %}active{% endif %}">
                 <span class="nav-icon">▤</span>
                 Hospital Portal
+            </a>
+
+            <a href="{{ url_for('docs_viewer') }}"
+               class="nav-link-custom {% if request.endpoint == 'docs_viewer' %}active{% endif %}">
+                <span class="nav-icon">✎</span>
+                Documentation
             </a>
         </nav>
 

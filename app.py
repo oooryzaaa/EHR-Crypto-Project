@@ -1,18 +1,20 @@
 import secrets
+from pathlib import Path
+
 from flask import (
     Flask, render_template, request,
-    jsonify, session
+    jsonify, session, redirect, url_for
 )
+from markupsafe import Markup
+
+from utils.markdown_lite import render as render_markdown
 
 app = Flask(__name__)
 app.secret_key = secrets.token_bytes(32)
 
-# Educational parameters only
+
 P = 467
 G = 2
-
-# Local development state.
-# Not persistent and not intended for multiple workers.
 DEMO_STATES = {}
 
 
@@ -85,6 +87,51 @@ def cryptography():
 @app.get("/hospital")
 def hospital():
     return render_template("hospital.html")
+
+
+# -------------------------
+# Documentation Viewer
+# -------------------------
+
+DOCS_DIR = Path(__file__).resolve().parent / "docs"
+
+DOCS_PAGES = (
+    ("cheatsheet", "Script Demo"),
+    ("walkthrough-oryza-aldo", "Bagian Oryza & Aldo"),
+    ("code-walkthrough", "Kode per Baris"),
+    ("web-flow", "Alur Web"),
+    ("demo-guide", "Panduan Demo"),
+    ("math-engine", "Math Engine"),
+)
+
+
+def read_doc(name):
+    """Return the raw Markdown for a whitelisted document name."""
+    if name not in {slug for slug, _ in DOCS_PAGES}:
+        return None
+
+    try:
+        return (DOCS_DIR / f"{name}.md").read_text(encoding="utf-8")
+    except OSError:
+        return None
+
+
+@app.get("/docs")
+@app.get("/docs/<name>")
+def docs_viewer(name="cheatsheet"):
+    content = read_doc(name)
+
+    if content is None:
+        return redirect(url_for("docs_viewer", name="cheatsheet"))
+
+    return render_template(
+        "docs.html",
+        active=name,
+        pages=DOCS_PAGES,
+        # The renderer escapes every piece of text it reads, so the output is
+        # safe to mark as trusted HTML.
+        content=Markup(render_markdown(content)),
+    )
 
 
 # -------------------------

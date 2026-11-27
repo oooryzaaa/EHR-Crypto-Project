@@ -6,7 +6,6 @@ Educational simulation of DH key exchange.
 """
 
 import secrets
-
 from crypto.math_utils import mod_exp
 
 

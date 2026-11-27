@@ -3,6 +3,12 @@
 Panduan demo dan penjelasan source code. Disusun urut: apa yang ditunjukkan,
 lalu kode mana yang dijelaskan, lalu antisipasi pertanyaan.
 
+**Dokumen pendamping:** [code-walkthrough.md](./code-walkthrough.md) (kode per
+baris), [web-flow.md](./web-flow.md) (alur request di web),
+[cheatsheet.md](./cheatsheet.md) (ringkasan satu halaman),
+[walkthrough-oryza-aldo.md](./walkthrough-oryza-aldo.md) (bagian Oryza dan
+Aldo, format per baris).
+
 ## Persiapan sebelum demo
 
 ```powershell
@@ -15,6 +21,9 @@ Buka `http://127.0.0.1:5000`.
 - Pastikan internet hidup sebelum demo. `templates/base.html` memuat Bootstrap
   dari CDN jsdelivr. Tanpa internet, tampilan akan berantakan.
 - Parameter demo: `P = 467`, `G = 2` (didefinisikan di `app.py` dan `main.py`).
+  Alasannya: 467 prima, lebih besar dari 256, **safe prime** (467 = 2×233+1,
+  233 prima), dan **2 adalah primitive root** dengan orde penuh 466. Penjelasan
+  lengkap ada di [code-walkthrough.md](./code-walkthrough.md) bagian [0.5].
 - State simulasi disimpan di memori (`DEMO_STATES`), hilang jika server restart.
 - Ukuran sampel EHR dari tombol **Use Sample Data** adalah 119 byte, sehingga
   menghasilkan 119 blok ciphertext.
@@ -236,7 +245,9 @@ yang sama, jadi tidak ada duplikasi logika kriptografi.
 | Kenapa ciphertext lebih besar dari plaintext? | Setiap byte menjadi dua angka `(c1, c2)`, sehingga 119 byte menjadi 119 pasangan. |
 | Kenapa hasil enkripsi berubah setiap klik? | `k` dan kunci dibuat acak baru setiap proses, tetapi hasil dekripsi selalu sama. |
 | Kenapa `p` harus > 256? | Karena byte dipetakan ke `1..256`; modulus lebih kecil membuat sebagian nilai tidak terwakili. |
-| Bug apa yang ditemukan saat pengujian? | Public key DH bisa jatuh di `p-1` (peluang ~0,37% untuk `p=467, g=2`), lalu ditolak validasi. Sudah diperbaiki dengan perulangan dan regression test. |
+| Kenapa memilih 467, bukan angka lain? | 467 memenuhi semua syarat: prima, > 256, safe prime, dan 2 primitive root berorde penuh 466 (jadi public key tersebar merata). 347 juga memenuhi syarat; 467 dipilih karena mudah dihitung manual saat demo. Bukan angka standar. |
+| Apakah 467 aman? | Tidak. Hanya 9 bit, sedangkan minimum modern 2048 bit. Tujuannya supaya hasil pangkat bisa diperiksa manual. |
+| Bug apa yang ditemukan saat pengujian? | Sebelum diperbaiki, public key DH bisa jatuh di `p-1` (peluang ~0,37% terukur dari 20.000 percobaan, ~0,43% teoretis), lalu ditolak validasi. Kini ditangani perulangan di `generate_dh_keys`: 0 kegagalan dari 20.000 percobaan, plus regression test. |
 | Apa bedanya web dan CLI? | Logika kriptografi sama; beda pada tempat pembuatan kunci ElGamal dan cara penyimpanan state (Flask session vs variabel lokal). |
 | Kenapa state hilang saat server restart? | State disimpan di dict memori (`DEMO_STATES`), bukan database. |
 
