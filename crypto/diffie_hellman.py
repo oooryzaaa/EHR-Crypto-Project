@@ -2,7 +2,6 @@
 """
 Erdoza EHR Project
 Module: Diffie-Hellman Key Exchange
-Developer: Oryza
 Educational simulation of DH key exchange.
 """
 
@@ -31,11 +30,15 @@ def generate_dh_keys(
     if not 1 < g < p:
         raise ValueError("Generator must satisfy 1 < g < p.")
 
-    private_key = secrets.randbelow(p - 3) + 2
+    for _ in range(1000):
+        private_key = secrets.randbelow(p - 3) + 2
+        public_key = mod_exp(g, private_key, p)
 
-    public_key = mod_exp(g, private_key, p)
+        # compute_shared_secret rejects public keys outside 2..p-2.
+        if 2 <= public_key <= p - 2:
+            return private_key, public_key
 
-    return private_key, public_key
+    raise ValueError("Generator produces no usable public key for this modulus.")
 
 
 def compute_shared_secret(

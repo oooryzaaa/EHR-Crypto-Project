@@ -1,5 +1,6 @@
 
 import unittest
+from unittest.mock import patch
 
 from crypto.diffie_hellman import (
     generate_dh_keys,
@@ -51,6 +52,17 @@ class TestDiffieHellman(unittest.TestCase):
             result["clinic_secret"],
             result["hospital_secret"]
         )
+
+    def test_handshake_never_fails_on_degenerate_public_key(self):
+        # Private key 233 gives public key p - 1 for p=467, g=2.
+        with patch("crypto.diffie_hellman.secrets.randbelow", side_effect=[231, 5]):
+            private_key, public_key = generate_dh_keys(self.p, self.g)
+
+        self.assertEqual(private_key, 7)
+        self.assertTrue(2 <= public_key <= self.p - 2)
+
+        for _ in range(5000):
+            self.assertTrue(perform_handshake(self.p, self.g)["success"])
 
     def test_invalid_public_key(self):
         with self.assertRaises(ValueError):
